@@ -1,4 +1,5 @@
-﻿public Asset SingleAssetWithAttributes() throws Exception {
+// This is how to get a single asset and attributes
+public Asset SingleAssetWithAttributes() throws Exception {
         Oid memberId = Oid.fromToken("Member:20", _metaModel);
         Query query = new Query(memberId);
         IAttributeDefinition nameAttribute = _metaModel.getAttributeDefinition("Member.Name");
