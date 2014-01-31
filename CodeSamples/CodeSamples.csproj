@@ -65,9 +65,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="rest-1.v1\csharp\queryWithRestClient - Copy.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="rest-1.v1\csharp\queryWithRestClient.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
