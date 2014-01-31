@@ -5,6 +5,7 @@ using VersionOneRestSharpClient.Client;
 
 namespace VersionOneRestSharpClient.Example
 {
+	// Define a custom DTO to hold your query result:
     public class Scope
     {
         public string Name { get; set; }
