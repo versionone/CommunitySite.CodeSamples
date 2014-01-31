@@ -1,0 +1,13 @@
+﻿<div ng-app ng-controller="tabsController">
+    <h1>Click a tab below to see VersionOne code examples in different formats:</h1>
+    <ul class="nav nav-pills">
+        <li ng-click="selectTab(tab)" ng-repeat="tab in tabs">
+            <a data-toggle="tab" href="#{{tab.id}}_sample">{{tab.title}}</a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane codeSample" id="{{tab.id}}_sample" ng-repeat="tab in tabs">
+            <div id="{{tab.id}}_ace">{{tab.content}}</div>
+        </div>
+    </div>
+</div>
