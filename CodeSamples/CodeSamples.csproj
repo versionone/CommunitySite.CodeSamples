@@ -936,6 +936,7 @@
     <Content Include="rest-1.v1\csharp\queryWithRestClient.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="rest-1.v1\java\query.java" />
     <Content Include="rest-1.v1\java\query.txt" />
     <Content Include="samples.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
