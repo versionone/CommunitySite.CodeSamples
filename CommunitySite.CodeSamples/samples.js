@@ -4,7 +4,7 @@
 	"title": "Java API Query",
 	"content": "",
 	"mode": "java",
-	"url": "http://v1codesamples.azurewebsites.net/api/sample?path=rest-1.v1/java/query.txt"
+	"url": "http://v1codesamples.azurewebsites.net/api/sample?path=rest-1.v1/java/query.java"
 },
 {
 	"id": "csharp",
