@@ -158,6 +158,7 @@
     <Content Include="bower_components\angular\angular.min.js.map" />
     <Content Include="bower_components\angular\bower.json" />
     <Content Include="bower_components\angular\README.md" />
+    <Content Include="Global.asax" />
     <Content Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -963,7 +964,10 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Sample.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\Sample.cs" />
     <Content Include="bower_components\ace-builds\kitchen-sink\docs\csharp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

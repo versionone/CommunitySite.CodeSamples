@@ -7,15 +7,16 @@ using System.Web.Http;
 using System.IO;
 using System.Web.Hosting;
 
-namespace CodeSamples
+namespace CodeSamples.Controllers
 {
-    public class Sample : ApiController
+    [RoutePrefix("api/sample")]
+    public class Render : ApiController
     {
         //// GET api/<controller>
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
+        public IEnumerable<string> Get()
+        {
+            return new string[] { "value1", "value2" };
+        }
 
         // GET api/<controller>/5
         public string Get(string path)
