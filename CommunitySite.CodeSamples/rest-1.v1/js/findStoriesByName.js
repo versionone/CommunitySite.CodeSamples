@@ -1,4 +1,5 @@
 ﻿var findByNameSubstring = "Newbie";
+
 var server = "https://ec2-54-227-126-9.compute-1.amazonaws.com/VersionOne/rest-1.v1/Data/PrimaryWorkitem?accept=application/json&sel=Name,Number&find=" + findByNameSubstring + "&findin=Name";
 var username = "admin";
 var password = "admin"
@@ -11,8 +12,7 @@ var settings = {
 };
 // Requires jQuery to be loaded:
 $.ajax(settings).done(function (data) {
-    beautifulJson = JSON.stringify(data, null, 4);
-    console.log(beautifulJson);
+    console.log(JSON.stringify(data, null, 4));
 }).fail(function (xhr) {
     console.log('Request failed:');
     console.log(xhr.responseText);
