@@ -14,5 +14,5 @@ var settings = {
 $.ajax(settings).done(function (data) {
     console.log(JSON.stringify(data, null, 4));
 }).fail(function (xhr) {
-    console.log('Request failed:' + xhr.responseText);
+    console.log(JSON.stringify({ErrorMessage: 'Request failed:' + xhr.responseText}));
 });
