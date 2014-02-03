@@ -23,17 +23,17 @@ type Global() =
         GlobalConfiguration.Configuration.EnsureInitialized() |> ignore
 
 module CommunityAPI =
-    let CreateErrorResponse(errorMessage : string) =
+    let CreateErrorResponse errorMessage =
         let response = new HttpResponseMessage(HttpStatusCode.InternalServerError)
         response.Content <- new StringContent(errorMessage)
         response
 
-    let str(value : string) =
+    let str value =
         JValue.CreateString value
 
     type SampleController() =
         inherit ApiController()
-        member this.Get(path: string) =
+        member this.Get path =
             let samplePath = System.Web.Hosting.HostingEnvironment.MapPath("~/" + path)
             if String.IsNullOrWhiteSpace path then CreateErrorResponse "Please specify a valid path parameter in the form of /sample/<path>."
             elif File.Exists samplePath = false then CreateErrorResponse ("Could not find file at the specified path: " + path)
@@ -45,7 +45,7 @@ module CommunityAPI =
                 response
 
         [<Route("api/samples")>]
-        member this.GetByTopic(topic: string) =            
+        member this.GetByTopic topic =
             let topicPath = System.Web.Hosting.HostingEnvironment.MapPath("~/" + topic)
             if String.IsNullOrWhiteSpace topicPath then CreateErrorResponse "Please specify a valid path parameter in the form of /sample?topic=<topic>."
             elif Directory.Exists topicPath = false then CreateErrorResponse ("Could not find a topic named: " + topic)
