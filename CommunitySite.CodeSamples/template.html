@@ -1,4 +1,4 @@
-﻿<div ng-app ng-controller="tabsController">
+﻿<div ng-controller="tabsController">
     <h1>Click a tab below to see VersionOne code examples in different formats:</h1>
     <ul class="nav nav-pills">
         <li ng-click="selectTab(tab)" ng-repeat="tab in tabs">
@@ -9,7 +9,7 @@
         <div class="tab-pane codeSample" id="{{tab.id}}_sample" ng-repeat="tab in tabs">
             <div id="{{tab.id}}_ace">{{tab.content}}</div>
             <a class="btn" ng-click="run(tab.content)">Run</a>
-            <div id="output_ace" style="border-top: 1px solid black">{{tab.output}}</div>
+            <div id="output_ace" style="border-top: 1px solid black"></div>
         </div>
     </div>
 </div>
