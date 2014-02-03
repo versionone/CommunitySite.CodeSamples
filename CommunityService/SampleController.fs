@@ -45,15 +45,14 @@ module CommunityAPI =
                 response
 
         [<Route("api/samples")>]
-        member this.GetByTopic(topic: string) =
-            
+        member this.GetByTopic(topic: string) =            
             let topicPath = System.Web.Hosting.HostingEnvironment.MapPath("~/" + topic)
             if String.IsNullOrWhiteSpace topicPath then CreateErrorResponse "Please specify a valid path parameter in the form of /sample?topic=<topic>."
             elif Directory.Exists topicPath = false then CreateErrorResponse ("Could not find a topic named: " + topic)
             else 
                 let directory = new DirectoryInfo(topicPath)
                 let jArray = new JArray()
-                directory.GetDirectories() |> Seq.iter (fun langDir -> 
+                for langDir in directory.GetDirectories() do
                     let examples = new JArray()
                     let files = langDir.GetFiles()
                     let exampleFiles = query {
@@ -66,7 +65,7 @@ module CommunityAPI =
                     rootObject.Add("content", ParseStringToken String.Empty)
                     rootObject.Add("id", ParseStringToken langDir.Name)
                     let filePathRoot = "https://v1codesamples.azurewebsites.net/api/sample?path=" + topic + "/" + langDir.Name + "/"
-                    exampleFiles |> Seq.iter (fun file ->
+                    for file in exampleFiles do
                         let fileNameWithoutExtension = Path.GetFileNameWithoutExtension(file.Name)
                         let properties = query {
                             for file in files do
@@ -84,8 +83,6 @@ module CommunityAPI =
                         // TODO: multiple examples per language support
                         //examples.Add(example);
                         jArray.Add(example)
-                    ) |> ignore                    
-                ) |> ignore
 
                 let content = jArray.ToString()
 
