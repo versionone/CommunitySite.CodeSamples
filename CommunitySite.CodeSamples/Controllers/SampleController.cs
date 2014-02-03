@@ -61,7 +61,6 @@ namespace CommunitySite.CodeSamples.Controllers
                     using (var reader = new StreamReader(properties.OpenRead()))
                     {
                         var json = reader.ReadToEnd();
-                        var serializer = new JsonSerializer();
                         var exampleRoot = rootObject.DeepClone() as JObject;
                         var mergeWith = JObject.Parse(json);
                         var example = new JObject(exampleRoot.Concat(mergeWith.AsJEnumerable()));
