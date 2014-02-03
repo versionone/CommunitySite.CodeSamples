@@ -8,8 +8,8 @@
     <div class="tab-content">
         <div class="tab-pane codeSample" id="{{tab.id}}_sample" ng-repeat="tab in tabs">
             <div id="{{tab.id}}_ace">{{tab.content}}</div>
-            <a class="btn" ng-click="run(tab.content)">Run</a>
-            <div id="{{tab.id}}_output_ace" style="border-top: 1px solid black">{"message": "this is a test"}</div>
+            <a id="{{tab.id}}_run" ng-if="tab.mode == 'javascript'" class="btn" ng-click="run(tab.content)">Run</a>
+            <div id="{{tab.id}}_output_ace" ng-if="tab.mode == 'javascript'" style="border-top: 1px solid black"></div>
         </div>
     </div>
 </div>
