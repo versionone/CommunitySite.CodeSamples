@@ -8,6 +8,8 @@
     <div class="tab-content">
         <div class="tab-pane codeSample" id="{{tab.id}}_sample" ng-repeat="tab in tabs">
             <div id="{{tab.id}}_ace">{{tab.content}}</div>
+            <a class="btn" ng-click="run(tab.content)">Run</a>
+            <div id="output_ace">{{tab.output}}</div>
         </div>
     </div>
 </div>
