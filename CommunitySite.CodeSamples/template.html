@@ -8,9 +8,9 @@
     <div class="tab-content">
         <div class="tab-pane codeSample" id="{{tab.id}}_sample" ng-repeat="tab in tabs">
             <div id="{{tab.id}}_ace">{{tab.content}}</div>
-            <button type="button" class="btn btn-primary" ng-if="tab.mode == 'javascript'" ng-click="run(tab.content)">Run</button>
-            <button type="button" class="btn" ng-if="tab.mode == 'javascript'" ng-click="clear()">Clear</button>
-            <div id="{{tab.id}}_output_ace" ng-if="tab.mode == 'javascript'" style="border-top: 1px solid black"></div>
+            <button ng-show="tab.contentLoaded" type="button" class="btn btn-primary" ng-if="tab.mode == 'javascript'" ng-click="run(tab.content)">Run</button>
+            <button ng-show="tab.contentLoaded" id="{{tab.id}}_clear" type="button" class="btn" ng-if="tab.mode == 'javascript'" ng-click="clear()">Clear</button>
+            <div id="{{tab.id}}_output_ace" ng-show="tab.contentLoaded" ng-if="tab.mode == 'javascript'" style="border-top: 1px solid black"></div>
         </div>
     </div>
 </div>
