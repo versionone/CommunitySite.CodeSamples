@@ -28,8 +28,8 @@ module CommunityAPI =
         response.Content <- new StringContent(errorMessage)
         response
 
-    let ParseStringToken(value : string) =
-        JToken.Parse("\"" + value + "\"")
+    let str(value : string) =
+        JValue.CreateString value
 
     type SampleController() =
         inherit ApiController()
@@ -51,23 +51,25 @@ module CommunityAPI =
             elif Directory.Exists topicPath = false then CreateErrorResponse ("Could not find a topic named: " + topic)
             else 
                 let directory = new DirectoryInfo(topicPath)
-                let jArray = new JArray()
+                let topicExamples = new JArray()
                 for langDir in directory.GetDirectories() do
-                    let examples = new JArray()
+                    // let langExamples = new JArray() // TODO: support multiple examples per language
                     let files = langDir.GetFiles()
                     let exampleFiles = query {
                         for file in files do 
                         where (file.Extension <> ".json")
                         select file
                     }
+
                     let rootObject = new JObject()
-                    rootObject.Add("mode", ParseStringToken langDir.Name)
-                    rootObject.Add("content", ParseStringToken String.Empty)
-                    rootObject.Add("id", ParseStringToken langDir.Name)
+                    rootObject.["mode"] <- str langDir.Name
+                    rootObject.["id"] <- str langDir.Name
+                    rootObject.["content"] <- str String.Empty
+
                     let filePathRoot = "https://v1codesamples.azurewebsites.net/api/sample?path=" + topic + "/" + langDir.Name + "/"
                     for file in exampleFiles do
                         let fileNameWithoutExtension = Path.GetFileNameWithoutExtension(file.Name)
-                        let properties = query {
+                        let properties = query { 
                             for file in files do
                             where (file.Name = fileNameWithoutExtension + ".json")
                             head
@@ -77,14 +79,12 @@ module CommunityAPI =
                         let exampleRoot = rootObject.DeepClone() :?> JObject;
                         let mergeWith = JObject.Parse(json)
                         let example = new JObject(exampleRoot)
-                        for token in mergeWith.Properties() do
-                            example.Add(token.Name, token.Value)
-                        example.Add("url", ParseStringToken (filePathRoot + file.Name))
-                        // TODO: multiple examples per language support
-                        //examples.Add(example);
-                        jArray.Add(example)
+                        for token in mergeWith.Properties() do example.Add(token.Name, token.Value)
+                        example.["url"] <- str (filePathRoot + file.Name)                        
+                        //langExamples.Add(example); // TODO: multiple examples per language support
+                        topicExamples.Add(example)
 
-                let content = jArray.ToString()
+                let content = topicExamples.ToString()
 
                 let response = new HttpResponseMessage(HttpStatusCode.OK);
                 response.Content <- new StringContent(content, Encoding.UTF8, "text/plain");
