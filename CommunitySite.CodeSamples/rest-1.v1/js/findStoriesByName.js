@@ -12,7 +12,7 @@ var settings = {
 };
 // Requires jQuery to be loaded:
 $.ajax(settings).done(function (data) {
-    console.log(JSON.stringify(data, null, 4));
+    konsole.log(JSON.stringify(data, null, 4));
 }).fail(function (xhr) {
-    console.log(JSON.stringify({ErrorMessage: 'Request failed:' + xhr.responseText}));
+    konsole.log(JSON.stringify({ErrorMessage: 'Request failed:' + xhr.responseText}));
 });
