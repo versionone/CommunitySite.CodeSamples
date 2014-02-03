@@ -854,6 +854,7 @@
     <Content Include="bower_components\angular\angular.min.js" />
     <Content Include="Global.asax" />
     <Content Include="rest-1.v1\java\query.java" />
+    <Content Include="rest-1.v1\js\findStoriesByName.js" />
     <Content Include="samples.js" />
     <Content Include="template.html" />
     <Content Include="Web.config" />
