@@ -30,11 +30,11 @@ function jsonClean(original) {
 
     var results = [];
 
-    if (original._type == 'Asset') {
+    if (original._type == "Asset") {
         results.push(processAsset(original));
     }
 
-    if (original._type == 'Assets') {
+    if (original._type == "Assets") {
         for(var i = 0; i < original.Assets.length; i++) {
             var asset = original.Assets[i];
             results.push(processAsset(asset));
@@ -42,7 +42,7 @@ function jsonClean(original) {
     }
 
     if (results.length < 1) return results;
-    if (original._type == 'Asset') return results[0];
+    if (original._type == "Asset") return results[0];
     return results;
 }
 
@@ -53,18 +53,18 @@ function json2xml(obj) {
 		var item = obj[key];
 		if (item == null) item = "";
 		if (key == "_links") continue;
-		var attr = '\t<Attribute name="' + key + '" act="set"><![CDATA[' + item + ']]></Attribute>\n';
+		var attr = "\t<Attribute name=\"" + key + "\" act=\"set\"><![CDATA[" + item + "]]></Attribute>\n";
 		doc += attr;
 
 	}
 	for (var key in obj._links)
 	{
-		if (key == 'self') continue;
+		if (key == "self") continue;
 		var item = obj._links[key];
-		var isArray = Object.prototype.toString.call(item) === '[object Array]';
+		var isArray = Object.prototype.toString.call(item) === "[object Array]";
 		if (!isArray) {
-			var rel = '\t<Relation name="' + key + '" act="set">' +
-                '<Asset idref="' + item.idref +'"/></Relation>';
+			var rel = "\t<Relation name=\"" + key + "\" act=\"set\">" +
+                "<Asset idref=\"" + item.idref + "\"/></Relation>";
 			doc += rel;
 		}
 	}
