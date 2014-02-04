@@ -50,8 +50,8 @@ module CommunityAPI =
             if String.IsNullOrWhiteSpace topicPath then CreateErrorResponse "Please specify a valid path parameter in the form of /sample?topic=<topic>."
             elif Directory.Exists topicPath = false then CreateErrorResponse ("Could not find a topic named: " + topic)
             else 
-                let directory = new DirectoryInfo(topicPath)
-                let topicExamples = new JArray()
+                let directory = DirectoryInfo(topicPath)
+                let topicExamples = JArray()
                 for langDir in directory.GetDirectories() do
                     // let langExamples = new JArray() // TODO: support multiple examples per language
                     let files = langDir.GetFiles()
@@ -61,7 +61,7 @@ module CommunityAPI =
                         select file
                     }
 
-                    let rootObject = new JObject()
+                    let rootObject = JObject()
                     rootObject.["mode"] <- str langDir.Name
                     rootObject.["id"] <- str langDir.Name
                     rootObject.["content"] <- str String.Empty
@@ -78,7 +78,7 @@ module CommunityAPI =
                         let json = reader.ReadToEnd()
                         let exampleRoot = rootObject.DeepClone() :?> JObject;
                         let mergeWith = JObject.Parse(json)
-                        let example = new JObject(exampleRoot)
+                        let example = JObject(exampleRoot)
                         for token in mergeWith.Properties() do example.Add(token.Name, token.Value)
                         example.["url"] <- str (filePathRoot + file.Name)                        
                         //langExamples.Add(example); // TODO: multiple examples per language support

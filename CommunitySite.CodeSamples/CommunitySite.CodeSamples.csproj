@@ -1471,6 +1471,7 @@
     <Content Include="bower_components\requirejs\tests\workers.js" />
     <Content Include="Global.asax" />
     <Content Include="js\ajaxQuery.js" />
+    <Content Include="js\v1json.js" />
     <Content Include="rest-1.v1\java\query.java" />
     <Content Include="rest-1.v1\javascript\findStoriesByName.js" />
     <Content Include="samples.js" />
