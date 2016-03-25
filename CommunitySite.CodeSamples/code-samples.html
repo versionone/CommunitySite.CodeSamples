@@ -1,0 +1,88 @@
+<html>
+	<head>
+		<title>Code Samples</title>
+		<script src="https://code.jquery.com/jquery-2.2.2.min.js" integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI=" crossorigin="anonymous"></script>		
+		<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+		<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="//v1codesamples.azurewebsites.net/bower_components/ace-builds/src-min-noconflict/ace.js"></script>
+		<script type="text/javascript" src="//v1codesamples.azurewebsites.net/bower_components/angular/angular.min.js"></script>
+		<script type="text/javascript" src="//v1codesamples.azurewebsites.net/bower_components/requirejs/require.js"></script>
+		<style>
+#pageText .nav {
+    display: block !important;
+    margin:0px !important;
+}
+.codeSample {
+    border: 1px solid lightgray;
+}
+.ace_editor { 
+    height: 300px;
+}		
+		</style>
+		<script type="text/javascript">
+var tabsController = function ($scope, $http) {
+	$http.get('http://v1codesamples.azurewebsites.net/api/samples?topic=rest-1.v1').success(function(data) {
+		$scope.tabs = data;
+	});
+
+	$scope.selectTab = function(tab) {
+	    tab.contentLoaded = false;
+	    if (tab.mode == "javascript") {
+	        $scope.output = ace.edit(tab.id + "_output_ace");
+	        $scope.output.setTheme("ace/theme/chrome");
+	        $scope.output.getSession().setUseWrapMode(true);
+	        $scope.output.getSession().setMode("ace/mode/json");    
+	    }
+
+	    $http.get(tab.url).success(function(data, status, headers, config) { tab.content = data;
+	    tab.contentLoaded = true;
+	    $scope.editor = ace.edit(tab.id + "_ace");    
+	    var editorData = data;    
+	    if (typeof data == "object") {
+	        editorData = JSON.stringify(data);
+	    }    
+	    $scope.editor.getSession().setValue(editorData);
+	    $scope.editor.setTheme("ace/theme/chrome");
+	    $scope.editor.getSession().setUseWrapMode(true);    
+	    $scope.editor.getSession().setMode("ace/mode/" + tab.mode);
+	    })
+	    .error(function(data, status, headers, config) { tab.content = 'Could not load remote content. Status code returned: ' + status; });
+	};
+	function log(message) {
+	    $scope.output.getSession().setValue(message);
+	};
+	$scope.run = function(tab) {
+	    var script = $scope.editor.getSession().getValue();
+	    var makeFunc = "(function(console) {" + script + "})";
+	    var func = eval(makeFunc);
+	    func({ log: log, console: console });
+	};
+	$scope.clear = function() {
+	    $scope.output.getSession().setValue('');
+	};
+};
+
+$(function() {
+    angular.bootstrap(document);
+});
+		</script>
+	</head>
+<body>
+	<div ng-controller="tabsController">
+	    <h1>Click a tab below to see VersionOne code examples in different formats:</h1>
+	    <ul class="nav nav-pills">
+	        <li ng-click="selectTab(tab)" ng-repeat="tab in tabs">
+	            <a data-toggle="tab" href="#{{tab.id}}_sample">{{tab.title}}</a>
+	        </li>
+	    </ul>
+	    <div class="tab-content">
+	        <div class="tab-pane codeSample" id="{{tab.id}}_sample" ng-repeat="tab in tabs">
+	            <div id="{{tab.id}}_ace">{{tab.content}}</div>
+	            <button ng-show="tab.contentLoaded" type="button" class="btn btn-primary" ng-if="tab.mode == 'javascript'" ng-click="run(tab.content)">Run</button>
+	            <button ng-show="tab.contentLoaded" id="{{tab.id}}_clear" type="button" class="btn" ng-if="tab.mode == 'javascript'" ng-click="clear()">Clear</button>
+	            <div id="{{tab.id}}_output_ace" ng-show="tab.contentLoaded" ng-if="tab.mode == 'javascript'" style="border-top: 1px solid black"></div>
+	        </div>
+	    </div>
+	</div>
+</body>
+</html>
