@@ -1476,6 +1476,7 @@
     <Content Include="rest-1.v1\javascript\findStoriesByName.js" />
     <Content Include="samples.js" />
     <Content Include="template.html" />
+    <Content Include="code-samples.html" />    
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
